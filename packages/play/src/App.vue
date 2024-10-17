@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <toy-button>按钮组件demo</toy-button>
+  <toy-button type="primary" size="small">按钮组件demo</toy-button>
 </template>
 
 <style scoped>
