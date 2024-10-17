@@ -4,12 +4,12 @@ import type { App, Plugin } from 'vue';
 import { each } from 'lodash-es';
 
 /** 
- * 可以作为 vue 插件安装的组件类型
+ * 插件款组件——可以作为 vue 插件安装的组件类型
  * 
  * @template T vue 组件对象类型
  * 
  * @note
- * 插件可以是一个拥有 install 方法的对象，也可以是一个安装函数本身。
+ * "插件": 一个拥有 install 方法的对象，或者安装函数本身。
  */
 type SFCWithInstall<T> = T & Plugin;
 
@@ -35,15 +35,15 @@ export function makeInstaller(plugins: Plugin[]) {
 }
 
 /**
- * 扩展插件安装功能，用于注册全局组件
+ * 把组件改造为插件形式，用于注册全局组件
  *
  * @param comp vue 组件对象
- * @returns 装饰后的组件
+ * @returns 装饰后的插件款组件
  * 
  * @example 
- * const ToyButton = withInstall(Button);
+ * const ToyButton = withInstallComponent(Button);
  */
-export const withInstall = <T>(comp: T) => {
+export const withInstallComponent = <T>(comp: T) => {
   (comp as SFCWithInstall<T>).install = (app: App) => {
     const name = (comp as any)?.name || "UnamedComponent";
     app.component(name, comp as SFCWithInstall<T>);
