@@ -1,0 +1,199 @@
+.toy-button-group {
+  --toy-button-group-border-color: var(--toy-border-color-lighter);
+}
+.toy-button {
+  --toy-button-font-weight: var(--toy-font-weight-primary);
+  --toy-button-border-color: var(--toy-border-color);
+  --toy-button-bg-color: var(--toy-fill-color-blank);
+  --toy-button-text-color: var(--toy-text-color-regular);
+  --toy-button-disabled-text-color: var(--toy-disabled-text-color);
+  --toy-button-disabled-bg-color: var(--toy-fill-color-blank);
+  --toy-button-disabled-border-color: var(--toy-border-color-light);
+  --toy-button-hover-text-color: var(--toy-color-primary);
+  --toy-button-hover-bg-color: var(--toy-color-primary-light-9);
+  --toy-button-hover-border-color: var(--toy-color-primary-light-7);
+  --toy-button-active-text-color: var(--toy-button-hover-text-color);
+  --toy-button-active-border-color: var(--toy-color-primary);
+  --toy-button-active-bg-color: var(--toy-button-hover-bg-color);
+  --toy-button-outline-color: var(--toy-color-primary-light-5);
+  --toy-button-active-color: var(--toy-text-color-primary);
+}
+
+.toy-button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 1;
+  height: 32px;
+  white-space: nowrap;
+  cursor: pointer;
+  color: var(--toy-button-text-color);
+  text-align: center;
+  box-sizing: border-box;
+  outline: none;
+  transition: 0.1s;
+  font-weight: var(--toy-button-font-weight);
+  user-select: none;
+  vertical-align: middle;
+  -webkit-appearance: none;
+  background-color: var(--toy-button-bg-color);
+  border: var(--toy-border);
+  border-color: var(--toy-button-border-color);
+  padding: 8px 15px;
+  font-size: var(--toy-font-size-base);
+  border-radius: var(--toy-border-radius-base);
+  & + & {
+    margin-left: 12px;
+  }
+  &:hover,
+  &:focus {
+    color: var(--toy-button-hover-text-color);
+    border-color: var(--toy-button-hover-border-color);
+    background-color: var(--toy-button-hover-bg-color);
+    outline: none;
+  }
+  &:active {
+    color: var(--toy-button-active-text-color);
+    border-color: var(--toy-button-active-border-color);
+    background-color: var(--toy-button-active-bg-color);
+    outline: none;
+  }
+  /*plain*/
+  &.is-plain {
+    --toy-button-hover-text-color: var(--toy-color-primary);
+    --toy-button-hover-bg-color: var(--toy-fill-color-blank);
+    --toy-button-hover-border-color: var(--toy-color-primary);
+  }
+  /*round*/
+  &.is-round {
+    border-radius: var(--toy-border-radius-round);
+  }
+  /*circle*/
+  &.is-circle {
+    border-radius: 50%;
+    padding: 8px;
+  }
+  /*disabled*/
+  &.is-loading,
+  &.is-disabled,
+  &.is-disabled:hover,
+  &.is-disabled:focus,
+  &[disabled],
+  &[disabled]:hover,
+  &[disabled]:focus {
+    color: var(--toy-button-disabled-text-color);
+    cursor: not-allowed;
+    background-image: none;
+    background-color: var(--toy-button-disabled-bg-color);
+    border-color: var(--toy-button-disabled-border-color);
+  }
+  [class*="toy-icon"] {
+    width: 1em;
+    height: 1em;
+  }
+}
+@each $val in primary, success, warning, info, danger {
+  .toy-button--$(val) {
+    --toy-button-text-color: var(--toy-color-white);
+    --toy-button-bg-color: var(--toy-color-$(val));
+    --toy-button-border-color: var(--toy-color-$(val));
+    --toy-button-outline-color: var(--toy-color-$(val)-light-5);
+    --toy-button-active-color: var(--toy-color-$(val)-dark-2);
+    --toy-button-hover-text-color: var(--toy-color-white);
+    --toy-button-hover-bg-color: var(--toy-color-$(val)-light-3);
+    --toy-button-hover-border-color: var(--toy-color-$(val)-light-3);
+    --toy-button-active-bg-color: var(--toy-color-$(val)-dark-2);
+    --toy-button-active-border-color: var(--toy-color-$(val)-dark-2);
+    --toy-button-disabled-text-color: var(--toy-color-white);
+    --toy-button-disabled-bg-color: var(--toy-color-$(val)-light-5);
+    --toy-button-disabled-border-color: var(--toy-color-$(val)-light-5);
+  }
+  .toy-button--$(val).is-plain {
+    --toy-button-text-color: var(--toy-color-$(val));
+    --toy-button-bg-color: var(--toy-color-$(val)-light-9);
+    --toy-button-border-color: var(--toy-color-$(val)-light-5);
+    --toy-button-hover-text-color: var(--toy-color-white);
+    --toy-button-hover-bg-color: var(--toy-color-$(val));
+    --toy-button-hover-border-color: var(--toy-color-$(val));
+    --toy-button-active-text-color: var(--toy-color-white);
+
+    --toy-button-disabled-text-color: var(--toy-color-$(val)-light-5);
+    --toy-button-disabled-bg-color: var(--toy-color-$(val)-light-9);
+    --toy-button-disabled-border-color: var(--toy-color-$(val)-light-8);
+  }
+}
+.toy-button--large {
+  --toy-button-size: 40px;
+  height: var(--toy-button-size);
+  padding: 12px 19px;
+  font-size: var(--toy-font-size-base);
+  border-radius: var(--toy-border-radius-base);
+  /*circle*/
+  &.is-circle {
+    border-radius: 50%;
+    padding: 12px;
+  }
+}
+.toy-button--small {
+  --toy-button-size: 24px;
+  height: var(--toy-button-size);
+  padding: 5px 11px;
+  font-size: 12px;
+  border-radius: calc(var(--toy-border-radius-base) - 1px);
+  /*circle*/
+  &.is-circle {
+    border-radius: 50%;
+    padding: 5px;
+  }
+  [class*="toy-icon"] {
+    width: 12px;
+    height: 12px;
+  }
+}
+
+.toy-button-group {
+  display: inline-block;
+  vertical-align: middle;
+
+  &::after {
+    clear: both;
+  }
+  & > :deep(.toy-button) {
+    float: left;
+    position: relative;
+    margin-left: 0;
+    &:first-child {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+      border-right-color: var(--toy-button-group-border-color);
+    }
+    &:last-child {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+      border-left-color: var(--toy-button-group-border-color);
+    }
+    &:not(:first-child):not(:last-child) {
+      border-radius: 0;
+
+      border-left-color: var(--toy-button-group-border-color);
+      border-right-color: var(--toy-button-group-border-color);
+    }
+    &:not(:last-child) {
+      margin-right: -1px;
+    }
+    &:first-child:last-child {
+      border-top-right-radius: var(--toy-border-radius-base);
+      border-bottom-right-radius: var(--toy-border-radius-base);
+      border-top-left-radius: var(--toy-border-radius-base);
+      border-bottom-left-radius: var(--toy-border-radius-base);
+
+      &.is-round {
+        border-radius: var(--toy-border-radius-round);
+      }
+
+      &.is-circle {
+        border-radius: 50%;
+      }
+    }
+  }
+}

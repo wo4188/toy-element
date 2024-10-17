@@ -15,7 +15,7 @@ const props = withDefaults(defineProps<ButtonProps>(), {
 
 const slots = defineSlots();
 
-const _ref = ref<HTMLButtonElement | null>(null)
+const _ref = ref<HTMLButtonElement | null>(null);
 </script>
 
 <template>
@@ -37,3 +37,7 @@ const _ref = ref<HTMLButtonElement | null>(null)
     <slot></slot>
   </component>
 </template>
+
+<style scoped>
+@import "./style.css";
+</style>
