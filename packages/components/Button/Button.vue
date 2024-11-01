@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import type { StyleValue } from 'vue';
-import { ref, computed } from 'vue';
+import { ref, computed, inject } from 'vue';
 import type { ButtonProps, ButtonEmits, ButtonInstance } from "./types";
 import { throttle } from 'lodash-es';
+import { BUTTON_GROUP_CTX_KEY } from './constants';
 import ToyIcon from '../Icon/Icon.vue';
 
 defineOptions({
@@ -19,7 +20,17 @@ const emits = defineEmits<ButtonEmits>();
 
 const slots = defineSlots();
 
+const btnGroupCtx = inject(BUTTON_GROUP_CTX_KEY);
 const _ref = ref<HTMLButtonElement>();
+const size = computed(() => {
+  return btnGroupCtx?.size ?? props.size ?? "";
+})
+const type = computed(() => {
+  return btnGroupCtx?.type ?? props.type ?? "";
+})
+const disabled = computed(() => {
+  return props?.disabled || btnGroupCtx?.disabled || false;
+})
 const iconStyle = computed<StyleValue>(() => {
   return {
     marginRight: slots.default ? "6px" : "0px",
@@ -35,6 +46,9 @@ const handleBtnClickThrottle = throttle(
 
 defineExpose<ButtonInstance>({
   ref: _ref,
+  disabled,
+  size,
+  type,
 })
 </script>
 
