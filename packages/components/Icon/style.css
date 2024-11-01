@@ -1,0 +1,22 @@
+.toy-icon {
+  display: inline-block;
+  font-size: 1.5em;
+  line-height: 1;
+  vertical-align: middle;
+}
+.toy-icon {
+  --toy-icon-color: inherit;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  fill: currentColor;
+  color: var(--toy-icon-color);
+  font-size: inherit;
+}
+
+@each $val in primary, info, success, warning, danger {
+  .toy-icon--$(val) {
+    --toy-icon-color: var(--toy-color-$(val));
+  }
+}
