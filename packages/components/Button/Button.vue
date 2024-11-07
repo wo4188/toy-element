@@ -20,7 +20,7 @@ const emits = defineEmits<ButtonEmits>();
 
 const slots = defineSlots();
 
-const btnGroupCtx = inject(BUTTON_GROUP_CTX_KEY);
+const btnGroupCtx = inject(BUTTON_GROUP_CTX_KEY, void 0);
 const _ref = ref<HTMLButtonElement>();
 const size = computed(() => {
   return btnGroupCtx?.size ?? props.size ?? "";
