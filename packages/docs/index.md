@@ -3,7 +3,7 @@
 layout: home
 
 hero:
-  name: "Toy-Element"
+  name: "Toy-View"
   text: "玩具版 Element Plus 组件库"
   tagline: My great project tagline
   actions:

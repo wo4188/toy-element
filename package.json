@@ -1,15 +1,15 @@
 {
-  "name": "@toy-element/workspace",
+  "name": "@toy-view/workspace",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "pnpm run build && pnpm --filter @toy-element/play dev",
-    "dev-only": "pnpm --filter @toy-element/play dev",
-    "docs:dev": "pnpm --filter @toy-element/docs dev",
-    "docs:build": "pnpm --filter @toy-element/docs build",
-    "test": "pnpm --filter @toy-element/components test",
-    "build": "pnpm --filter toy-element build"
+    "dev": "pnpm run build && pnpm --filter @toy-view/play dev",
+    "dev-only": "pnpm --filter @toy-view/play dev",
+    "docs:dev": "pnpm --filter @toy-view/docs dev",
+    "docs:build": "pnpm --filter @toy-view/docs build",
+    "test": "pnpm --filter @toy-view/components test",
+    "build": "pnpm --filter toy-view build"
   },
   "keywords": [],
   "author": "",
@@ -40,11 +40,11 @@
     "vue-tsc": "^1.8.27"
   },
   "dependencies": {
-    "@toy-element/hooks": "workspace:*",
-    "@toy-element/theme": "workspace:*",
-    "@toy-element/utils": "workspace:*",
+    "@toy-view/hooks": "workspace:*",
+    "@toy-view/theme": "workspace:*",
+    "@toy-view/utils": "workspace:*",
     "lodash-es": "^4.17.21",
-    "toy-element": "workspace:*",
+    "toy-view": "workspace:*",
     "vue": "^3.4.19"
   }
 }

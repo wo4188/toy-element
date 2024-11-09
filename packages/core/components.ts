@@ -2,7 +2,7 @@ import {
   ToyButton,
   ToyButtonGroup,
   ToyIcon,
-} from '@toy-element/components';
+} from '@toy-view/components';
 
 import type { Plugin } from 'vue';
 

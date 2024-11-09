@@ -1,5 +1,5 @@
 {
-  "name": "toy-element",
+  "name": "toy-view",
   "version": "1.0.0",
   "description": "Toy组件库(vue3 + ts)",
   "type": "module",
@@ -51,7 +51,7 @@
   },
   "devDependencies": {
     "vite-plugin-dts": "^4.3.0",
-    "@toy-element/components": "workspace:*"
+    "@toy-view/components": "workspace:*"
   },
   "peerDependencies": {
     "vue": "^3.4.19"

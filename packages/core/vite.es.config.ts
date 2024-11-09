@@ -26,7 +26,7 @@ export default defineConfig({
     outDir: 'dist/es',
     lib: {
       entry: resolve(__dirname, './index.ts'),
-      name: 'ToyElement',
+      name: 'ToyView',
       fileName: 'index',
       formats: ['es'],
     },

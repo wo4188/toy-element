@@ -1,9 +1,9 @@
-import { makeInstaller } from "@toy-element/utils";
+import { makeInstaller } from "@toy-view/utils";
 import components from "./components";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 
-import "@toy-element/theme/index.css";
+import "@toy-view/theme/index.css";
 
 library.add(fas);
 const installer = makeInstaller(components);
