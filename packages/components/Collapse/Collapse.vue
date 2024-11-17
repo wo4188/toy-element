@@ -2,9 +2,12 @@
 import type { CollapseProps, CollapseEmits, CollapseItemName } from "./types";
 import { ref, provide, watch, watchEffect } from "vue";
 import { COLLAPSE_CTX_KEY } from "./constants";
+import { echoWarn } from "@toy-view/utils";
+
+const COMP_NAME = "ToyCollapse" as const;
 
 defineOptions({
-  name: "ToyCollapse",
+  name: COMP_NAME,
 });
 
 const props = defineProps<CollapseProps>();
@@ -39,10 +42,7 @@ function updateActiveNames(newNames: CollapseItemName[]) {
 
 watchEffect(() => {
   if (props.accordion && activeNames.value.length > 1) {
-    console.warn(
-      // 手风琴模式：每次只能展开一个面板
-      "[Collapse] accordion mode should only have one active item"
-    );
+    echoWarn(COMP_NAME, "手风琴模式，每次只能展开一个面板");
   }
 });
 
