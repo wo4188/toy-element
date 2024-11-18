@@ -20,21 +20,22 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+
+    "types": ["node"],
+    "baseUrl": "./",
+    "paths": {
+      "@toy-view/components": ["./packages/components"]
+    }
   },
   "include": [
     "packages/core/index.ts",
     "packages/hooks/**/*.ts",
     "packages/utils/**/*.ts",
-    "packages/components/index.ts",
-    "packages/components/**/*.ts",
-    "packages/components/**/*.vue",
-
-    "packages/**/*.ts",
-    "packages/**/*.tsx",
-    "packages/**/*.vue"
+    "packages/components/**/*.ts"
   ],
   "exclude": [
-    "packages/components/vitest.config.ts"
+    "packages/components/vitest.config.ts", //
+    "packages/play"
   ]
 }

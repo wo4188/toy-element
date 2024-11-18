@@ -24,10 +24,9 @@
     "./dist/index.css"
   ],
   "scripts": {
-    "build": "run-s clean build-only",
-    "build-only": "run-p build-es build-umd",
-    "build-umd": "vite build --config vite.umd.config.ts",
-    "build-es": "vite build --config vite.es.config.ts",
+    "build": "run-p build:es build:umd",
+    "build:es": "vite build --config vite.es.config.ts",
+    "build:umd": "vite build --config vite.umd.config.ts",
     "move-style": "move-file dist/es/index.css dist/index.css",
     "clean": "rimraf dist",
     "release": "release-it"

@@ -3,7 +3,11 @@ import vue from '@vitejs/plugin-vue';
 import { resolve } from 'path';
 import dts from 'vite-plugin-dts';
 import { readdirSync } from 'fs';
-import { filter, map } from 'lodash-es';
+import { filter, map, delay } from 'lodash-es';
+import shell from 'shelljs';
+import hooks from './hooksPlugin';
+
+const RETRY_MOVE_STYLES_MS = 800 as const;
 
 function getDirectoriesSync(basePath: string) {
   const entries = readdirSync(basePath, { withFileTypes: true });
@@ -14,13 +18,27 @@ function getDirectoriesSync(basePath: string) {
   );
 }
 
+function moveStyles() {
+  try {
+    readdirSync('./dist/es/theme');
+    shell.mv('./dist/es/theme', './dist');
+  } catch (_) {
+    delay(moveStyles, RETRY_MOVE_STYLES_MS);
+  }
+}
+
 export default defineConfig({
   plugins: [
     vue(),
     dts({
       tsconfigPath: '../../tsconfig.build.json',
       outDir: 'dist/types',
-    })],
+    }),
+    hooks({
+      rmFiles: ['./dist/es', './dist/theme', './dist/types'],
+      afterBuild: moveStyles,
+    }),
+  ],
   build: {
     outDir: 'dist/es',
     minify: false,
