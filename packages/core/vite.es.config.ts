@@ -5,7 +5,6 @@ import dts from 'vite-plugin-dts';
 import { readdirSync } from 'fs';
 import { filter, map } from 'lodash-es';
 
-// @ts-ignore
 function getDirectoriesSync(basePath: string) {
   const entries = readdirSync(basePath, { withFileTypes: true });
 
@@ -24,6 +23,8 @@ export default defineConfig({
     })],
   build: {
     outDir: 'dist/es',
+    minify: false,
+    cssCodeSplit: true,
     lib: {
       entry: resolve(__dirname, './index.ts'),
       name: 'ToyView',
@@ -44,6 +45,11 @@ export default defineConfig({
           if (assetInfo.name === 'style.css') {
             return 'index.css';
           }
+          if (assetInfo.type === "asset" && //
+            /\.(css)$/i.test(assetInfo.name as string)
+          ) {
+            return "theme/[name].[ext]";
+          }
           return assetInfo.name as string;
         },
         manualChunks: (id) => {
@@ -61,6 +67,9 @@ export default defineConfig({
               return compName;
             }
           }
+        },
+        chunkFileNames: () => {
+          return "[name].mjs";
         },
       },
     },
