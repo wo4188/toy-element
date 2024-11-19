@@ -48,7 +48,9 @@
     "async-validator": "^4.2.5"
   },
   "devDependencies": {
+    "@rollup/plugin-terser": "^0.4.4",
     "@toy-view/components": "workspace:*",
+    "terser": "^5.36.0",
     "vite-plugin-compression2": "^1.3.1",
     "vite-plugin-dts": "^4.3.0"
   },

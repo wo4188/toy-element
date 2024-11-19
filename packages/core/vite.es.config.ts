@@ -6,8 +6,13 @@ import { readdirSync } from 'fs';
 import { filter, map, delay } from 'lodash-es';
 import shell from 'shelljs';
 import hooks from './hooksPlugin';
+import terser from '@rollup/plugin-terser';
 
 const RETRY_MOVE_STYLES_MS = 800 as const;
+
+const isProd = process.env.NODE_ENV === 'production';
+const isDev = process.env.NODE_ENV === 'development';
+const isTest = process.env.NODE_ENV === 'test';
 
 function getDirectoriesSync(basePath: string) {
   const entries = readdirSync(basePath, { withFileTypes: true });
@@ -38,10 +43,37 @@ export default defineConfig({
       rmFiles: ['./dist/es', './dist/theme', './dist/types'],
       afterBuild: moveStyles,
     }),
+    terser({
+      compress: {
+        sequences: isProd,
+        arguments: isProd,
+        drop_console: isProd && ['log'],
+        drop_debugger: isProd,
+        passes: isProd ? 4 : 1,
+        global_defs: {
+          '@PROD': JSON.stringify(isProd),
+          '@DEV': JSON.stringify(isDev),
+          '@TEST': JSON.stringify(isTest),
+        },
+      },
+      format: {
+        semicolons: false,
+        shorthand: isProd,
+        braces: !isProd,
+        beautify: !isProd,
+        comments: !isProd,
+      },
+      mangle: {
+        toplevel: isProd,
+        eval: isProd,
+        keep_classnames: isDev,
+        keep_fnames: isDev,
+      },
+    }),
   ],
   build: {
     outDir: 'dist/es',
-    minify: false,
+    minify: false, // 关闭自带的代码压缩混淆选项
     cssCodeSplit: true,
     lib: {
       entry: resolve(__dirname, './index.ts'),
