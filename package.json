@@ -4,12 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "pnpm run build && pnpm --filter @toy-view/play dev",
-    "dev-only": "pnpm --filter @toy-view/play dev",
+    "build=s=dev": "run-s build dev",
+    "dev": "pnpm --filter @toy-view/play dev",
     "docs:dev": "pnpm --filter @toy-view/docs dev",
     "docs:build": "pnpm --filter @toy-view/docs build",
-    "test": "pnpm --filter @toy-view/components test",
-    "build": "pnpm --filter toy-view build"
+    "test": "cross-env NODE_ENV=test pnpm --filter @toy-view/components test",
+    "build": "cross-env NODE_ENV=production pnpm --filter toy-view build",
+    "build-dev": "cross-env NODE_ENV=development pnpm --filter toy-view build:watch"
   },
   "keywords": [],
   "author": "",
