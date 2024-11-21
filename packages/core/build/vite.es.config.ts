@@ -2,11 +2,12 @@ import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import { resolve } from 'path';
 import dts from 'vite-plugin-dts';
-import { readdirSync } from 'fs';
-import { filter, map, delay } from 'lodash-es';
+import { readdir, readdirSync } from 'fs';
+import { filter, map, delay, defer } from 'lodash-es';
 import shell from 'shelljs';
 import hooks from './hooksPlugin';
 import terser from '@rollup/plugin-terser';
+import { visualizer } from "rollup-plugin-visualizer";
 
 const RETRY_MOVE_STYLES_MS = 800 as const;
 
@@ -24,12 +25,13 @@ function getDirectoriesSync(basePath: string) {
 }
 
 function moveStyles() {
-  try {
-    readdirSync('./dist/es/theme');
-    shell.mv('./dist/es/theme', './dist');
-  } catch (_) {
-    delay(moveStyles, RETRY_MOVE_STYLES_MS);
-  }
+  readdir('./dist/es/theme', (err) => {
+    if (err) {
+      delay(moveStyles, RETRY_MOVE_STYLES_MS);
+      return;
+    }
+    defer(() => shell.mv('./dist/es/theme', './dist'));
+  });
 }
 
 export default defineConfig({
@@ -38,6 +40,9 @@ export default defineConfig({
     dts({
       tsconfigPath: '../../tsconfig.build.json',
       outDir: 'dist/types',
+    }),
+    visualizer({
+      filename: 'dist/stats.es.html',
     }),
     hooks({
       rmFiles: ['./dist/es', './dist/theme', './dist/types'],
@@ -76,7 +81,7 @@ export default defineConfig({
     minify: false, // 关闭自带的代码压缩混淆选项
     cssCodeSplit: true,
     lib: {
-      entry: resolve(__dirname, './index.ts'),
+      entry: resolve(__dirname, '../index.ts'),
       name: 'ToyView',
       fileName: 'index',
       formats: ['es'],

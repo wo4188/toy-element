@@ -2,11 +2,12 @@ import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import { resolve } from 'path';
 import { compression } from 'vite-plugin-compression2';
-import { readFileSync } from 'fs';
-import { delay } from 'lodash-es';
+import { readFile } from 'fs';
+import { delay, defer } from 'lodash-es';
 import shell from 'shelljs';
 import hooks from './hooksPlugin';
 import terser from '@rollup/plugin-terser';
+import { visualizer } from "rollup-plugin-visualizer";
 
 const RETRY_MOVE_STYLES_MS = 800 as const;
 
@@ -15,12 +16,13 @@ const isDev = process.env.NODE_ENV === 'development';
 const isTest = process.env.NODE_ENV === 'test';
 
 function moveStyles() {
-  try {
-    readFileSync('./dist/umd/index.css.gz');
-    shell.cp('./dist/umd/index.css', './dist/index.css');
-  } catch (_) {
-    delay(moveStyles, RETRY_MOVE_STYLES_MS);
-  }
+  readFile('./dist/umd/index.css.gz', (err) => {
+    if (err) {
+      delay(moveStyles, RETRY_MOVE_STYLES_MS);
+      return;
+    }
+    defer(() => shell.cp('./dist/umd/index.css', './dist/index.css'));
+  })
 }
 
 export default defineConfig({
@@ -28,6 +30,9 @@ export default defineConfig({
     vue(), //
     compression({
       include: /.(cjs|css)$/i,
+    }),
+    visualizer({
+      filename: "dist/stats.umd.html",
     }),
     hooks({
       rmFiles: ['./dist/umd', './dist/index.css'],
@@ -50,7 +55,7 @@ export default defineConfig({
     outDir: 'dist/umd',
     minify: false,
     lib: {
-      entry: resolve(__dirname, './index.ts'),
+      entry: resolve(__dirname, '../index.ts'),
       name: 'ToyView',
       fileName: 'index',
       formats: ['umd'],
