@@ -1,6 +1,6 @@
 import type { BaseTransitionProps } from "vue";
 
-const transitionEvents: Pick<
+type Events = Pick<
   BaseTransitionProps,
   | "onBeforeEnter"
   | "onEnter"
@@ -8,7 +8,19 @@ const transitionEvents: Pick<
   | "onBeforeLeave"
   | "onLeave"
   | "onAfterLeave"
-> = {
+>;
+
+type FnWithOnlyOneArg<T extends (...args: any[]) => any> =
+  Parameters<T> extends [infer One, ...infer _] ?
+  (el: One) => ReturnType<T>
+  : T;
+
+const transitionEvents: {
+  [k in keyof Events]-?: Exclude<Events[k], any[]>;
+} & {
+  onEnter: FnWithOnlyOneArg<Exclude<Events['onEnter'], any[] | undefined>>;
+  onLeave: FnWithOnlyOneArg<Exclude<Events['onLeave'], any[] | undefined>>;
+} = {
   onBeforeEnter(el) {
     const _el = el as HTMLElement;
     _el.style.height = `${0}px`;

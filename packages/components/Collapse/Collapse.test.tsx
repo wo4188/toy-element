@@ -4,6 +4,7 @@ import type { VueWrapper } from "@vue/test-utils";
 
 import Collapse from "./Collapse.vue";
 import CollapseItem from "./CollapseItem.vue";
+import transitionEvents from './transitionEvents';
 
 const onChange = vi.fn();
 
@@ -169,5 +170,52 @@ describe("Collapse.vue", () => {
         ],
       ]
     `);
+  });
+});
+
+describe("Collapse/transitionEvents.ts", () => {
+  const wrapper = mount(() => (
+    <div>
+      测试demo
+    </div>
+  ));
+  const _el = (wrapper.element as HTMLElement);
+
+  test("onBeforeEnter", () => {
+    transitionEvents.onBeforeEnter(wrapper.element);
+    expect(_el.style.height).toBe("0px");
+    expect(_el.style.overflow).toBe("hidden");
+  });
+  test("onEnter", async () => {
+    const styleSpy = vi.spyOn(_el.style, "height", "set");
+    transitionEvents.onEnter(wrapper.element);
+    expect(styleSpy).toHaveBeenCalledTimes(3);
+    expect(styleSpy.mock.calls[0][0]).toBe("auto");
+    expect(styleSpy.mock.calls[1][0]).toBe("0px");
+    // 实际高度的相关属性值拿不到，都是0
+    expect(styleSpy.mock.calls[2][0]).toBe(`${_el.clientHeight}px`);
+  });
+  test("onAfterEnter", () => {
+    transitionEvents.onAfterEnter(wrapper.element);
+    expect(_el.style.height).toBe("auto");
+    expect(_el.style.overflow).toBe("unset");
+  });
+  test("onBeforeLeave", async () => {
+
+    const styleSpy = vi.spyOn(_el.style, "height", "set");
+    transitionEvents.onBeforeLeave(wrapper.element);
+    expect(styleSpy).toHaveBeenCalledTimes(1);
+    // 实际高度的相关属性值拿不到，都是0
+    expect(styleSpy.mock.calls[0][0]).toBe(`${_el.clientHeight}px`);
+    expect(_el.style.overflow).toBe("hidden");
+  });
+  test("onLeave", async () => {
+    transitionEvents.onLeave(wrapper.element);
+    expect(_el.style.height).toBe("0px");
+  });
+  test("onAfterLeave", () => {
+    transitionEvents.onAfterLeave(wrapper.element);
+    expect(_el.style.height).toBe("auto");
+    expect(_el.style.overflow).toBe("unset");
   });
 });
