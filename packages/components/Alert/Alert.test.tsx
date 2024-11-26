@@ -16,7 +16,7 @@ describe("Alert.vue", () => {
         default: desc,
       },
       global: {
-        stubs: ["ErIcon"],
+        stubs: ["ToyIcon"],
       },
     });
     expect(wrapper.text()).toContain(title);
@@ -54,7 +54,7 @@ describe("Alert.vue", () => {
         default: desc,
       },
       global: {
-        stubs: ["ErIcon"],
+        stubs: ["ToyIcon"],
       },
     });
 
@@ -77,7 +77,7 @@ describe("Alert.vue", () => {
         default: desc,
       },
       global: {
-        stubs: ["ErIcon"],
+        stubs: ["ToyIcon"],
       },
     });
     wrapper.findComponent(Icon).trigger("click");

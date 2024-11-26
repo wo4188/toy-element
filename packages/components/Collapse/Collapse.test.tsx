@@ -43,7 +43,7 @@ describe("Collapse.vue", () => {
     );
 
     headers = wrapper.findAll(".toy-collapse-item__header");
-    contents = wrapper.findAll(".toy-collapse-item__wapper");
+    contents = wrapper.findAll(".toy-collapse-item__wrapper");
 
     firstHeader = headers[0];
     secondHeader = headers[1];
@@ -125,7 +125,7 @@ describe("Collapse.vue", () => {
     );
 
     headers = wrapper.findAll(".toy-collapse-item__header");
-    contents = wrapper.findAll(".toy-collapse-item__wapper");
+    contents = wrapper.findAll(".toy-collapse-item__wrapper");
 
     firstHeader = headers[0];
     secondHeader = headers[1];
@@ -162,14 +162,12 @@ describe("Collapse.vue", () => {
         },
       }
     );
-    expect(warn.mock.calls).toMatchInlineSnapshot(
-      `
-          [
-            [
-              [ToyUIError: [ToyCollapse] accordion mode should only have one active item],
-            ],
-          ]
-        `
-    );
+    expect(warn.mock.calls).toMatchInlineSnapshot(`
+      [
+        [
+          [ToyViewError: [ToyCollapse] 手风琴模式，每次只能展开一个面板],
+        ],
+      ]
+    `);
   });
 });
