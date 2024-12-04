@@ -36,7 +36,6 @@
     "packages/components/**/*.ts"
   ],
   "exclude": [
-    "packages/components/vitest.config.ts", //
-    "packages/play"
+    "packages/play", //
   ]
 }

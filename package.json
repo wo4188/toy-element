@@ -8,7 +8,9 @@
     "dev": "pnpm --filter @toy-view/play dev",
     "docs:dev": "pnpm --filter @toy-view/docs dev",
     "docs:build": "pnpm --filter @toy-view/docs build",
-    "test": "cross-env NODE_ENV=test pnpm --filter @toy-view/components test",
+    "test": "run-p test-utils test-comp",
+    "test-comp": "cross-env NODE_ENV=test pnpm --filter @toy-view/components test",
+    "test-utils": "cross-env NODE_ENV=test pnpm --filter @toy-view/utils test",
     "build": "cross-env NODE_ENV=production pnpm --filter toy-view build",
     "build-dev": "cross-env NODE_ENV=development pnpm --filter toy-view build:watch"
   },
@@ -47,6 +49,9 @@
     "@toy-view/hooks": "workspace:*",
     "@toy-view/theme": "workspace:*",
     "@toy-view/utils": "workspace:*",
+    "@vitest/coverage-v8": "^1.4.0",
+    "@vue/test-utils": "^2.4.5",
+    "jsdom": "^24.0.0",
     "lodash-es": "^4.17.21",
     "toy-view": "workspace:*",
     "vue": "^3.4.19"
