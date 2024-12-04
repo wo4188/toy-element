@@ -8,7 +8,7 @@
     "dev": "pnpm --filter @toy-view/play dev",
     "docs:dev": "pnpm --filter @toy-view/docs dev",
     "docs:build": "pnpm --filter @toy-view/docs build",
-    "test": "run-p test-utils test-comp",
+    "test": "run-s test-utils test-comp",
     "test-comp": "cross-env NODE_ENV=test pnpm --filter @toy-view/components test",
     "test-utils": "cross-env NODE_ENV=test pnpm --filter @toy-view/utils test",
     "build": "cross-env NODE_ENV=production pnpm --filter toy-view build",
